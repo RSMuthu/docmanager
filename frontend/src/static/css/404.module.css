@@ -1,0 +1,63 @@
+/* setting div for the screen height */
+.page-not-found {
+    height: 100vh;
+    text-align: 'center'
+  }
+  /* parent div positioning and size scaling */
+  .not-found {
+    max-width: 920px;
+    width: 100%;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  /* This is for positioning the 404 page & backdropping using z-index */
+  .not-found .not-found-404 {
+    position: absolute;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+  }
+  /* This would change the coloring & look of 404 display */
+  .not-found .not-found-404 h1 {
+    color: #ececec;
+    font-weight: 900;
+    font-size: 276px;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  /* Sizing and bolding the <h2> tagged text */
+  .not-found h2 {
+    font-size: 46px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  /* Sizing and bolding the <p> tagged text */
+  .not-found p {
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-top: 15px;
+  }
+  /*
+   * hide css from old useragents
+   * & set @media rule for device with screen and a window with max-width
+   */
+  @media only screen and (width <= 480px) {
+    .not-found .not-found-404 h1 {
+      font-size: 162px;
+    }
+    .not-found h2 {
+      font-size: 26px;
+    }
+  }
