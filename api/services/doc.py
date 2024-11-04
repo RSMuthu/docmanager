@@ -82,6 +82,9 @@ class DocService(BaseService):
         Raises:
             NotFoundError: If the Doc is not found.
         """
+        existing_doc = (await Doc.get(db=self.db, filters=[Doc.position == data.position, ~col(Doc.is_deleted)])).one_or_none()
+        if existing_doc.id == doc_id:
+            raise DuplicateConstraint("Doc cannot have same position as another")
         doc = await self.get_doc(doc_id)
         await doc.update(self.db, data)
         return doc
