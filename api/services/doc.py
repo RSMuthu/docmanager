@@ -1,5 +1,5 @@
 from uuid import UUID
-from sqlmodel import col
+from sqlmodel import col, select, func
 from api.models.doc import Doc
 from api.interfaces.doc import DocRead, DocCreate, DocUpdate
 from api.utils.exceptions import NotFoundError, DuplicateConstraint
@@ -51,6 +51,11 @@ class DocService(BaseService):
         exist_doc = (await Doc.get(db=self.db, filters=[Doc.position == data.position, ~col(Doc.is_deleted)])).one_or_none()
         if exist_doc:
             raise DuplicateConstraint("Position is already taken")
+        if data.position is None:
+            max_position = (await self.db.execute(select(func.max(Doc.position)).where(~col(Doc.is_deleted)))).scalar()
+            print ("max", max_position)
+            data.position = (-1 if max_position is None else max_position) + 1  # to start count from zero
+        print (data.model_dump())
         new_doc = Doc(**data.model_dump())
         await new_doc.save(self.db)
         return new_doc
